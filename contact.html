@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | TukTuk Express</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        *{ margin: 0; padding: 0; box-sizing: border-box; }
+        body{ font-family: 'Poppins', sans-serif; background-color: #fff; color: #333; line-height: 1.6; overflow-x: hidden; }
+        .container{ max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- HEADER --- */
+        .mainheader{ position: fixed; top: 0; left: 0; width: 100%; height: 110px; z-index: 1000; background: #0a1f38; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; }
+        .nav{ display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo{ height: 90px; width: auto; display: block; transition: transform 0.3s ease; }
+
+        .navlist{ display: flex; list-style: none; }
+        .navlist li{ margin: 0 20px; }
+        .navlist a{ text-decoration: none; color: white; font-weight: 500; font-size: 1rem; text-transform: uppercase; transition: color 0.3s; position: relative; }
+        .navlist a::after{ content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #e67e22; transition: width 0.3s; }
+        .navlist a:hover::after, .navlist a.active::after{ width: 100%; }
+
+        .socials a{ color: white; font-size: 1.3rem; margin-left: 18px; }
+
+        /* --- BURGER --- */
+        .burgermenu{ display: none; cursor: pointer; padding: 10px; z-index: 1100; }
+        .bar{ display: block; width: 28px; height: 3px; margin: 5px auto; transition: all 0.3s ease-in-out; background-color: white; border-radius: 2px; }
+
+        /* --- CONTENT --- */
+        .contactwrapper { padding: 180px 0 80px 0; min-height: 80vh; }
+        .contactheader { margin-bottom: 80px; text-align: center; }
+        .contactgrid { display: flex; gap: 80px; flex-wrap: wrap; }
+        .contactinfo, .contactform { flex: 1; min-width: 300px; }
+        .contactinfo h2, .contactform h2 { font-size: 1.5rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px; }
+        .infobloc { margin-bottom: 25px; }
+        .statusnote { background: #f9f9f9; padding: 25px; border-left: 3px solid #e67e22; margin-top: 40px; }
+        .statusnote p { margin: 0; font-style: italic; color: #666; font-size: 0.9rem; }
+
+        .formgroup { margin-bottom: 25px; }
+        .formgroup label { display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+        .formgroup input, .formgroup textarea { width: 100%; padding: 15px; border: 1px solid #eee; background: #fcfcfc; font-family: 'Poppins', sans-serif; }
+        .contactform .btn.primary { border: none; cursor: pointer; width: 100%; padding: 15px; background: #0a1f38; color: white; font-weight: bold; text-transform: uppercase; transition: background 0.3s; }
+        .contactform .btn.primary:hover { background: #e67e22; }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        footer{ background: #0a1f38; color: white; padding: 60px 0 30px; text-align: center; }
+
+        /* --- MOBILE --- */
+        @media (max-width: 992px) {
+            .mainheader { height: 80px; }
+            .logo { height: 60px; }
+            .socials { display: none; }
+            .burgermenu { display: block; }
+
+            .navlist {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background-color: #0a1f38;
+                width: 100%;
+                height: calc(100vh - 80px);
+                text-align: center;
+                transition: 0.4s ease;
+                padding-top: 40px;
+            }
+
+            .navlist.active { left: 0; }
+            .navlist li { margin: 25px 0; }
+            .navlist a { font-size: 1.2rem; }
+
+            .burgermenu.active .bar:nth-child(2) { opacity: 0; }
+            .burgermenu.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .burgermenu.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            .contactwrapper { padding: 120px 0 40px 0; }
+            .contactgrid { gap: 40px; }
+            .contactheader { margin-bottom: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="mainheader">
+        <div class="nav container">
+            <div class="logowrapper">
+                <a href="index.html"><img src="images/logo.jpg" class="logo" alt="TukTuk Express"></a>
+            </div>
+            
+            <nav>
+                <ul class="navlist" id="navmenu">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="plats.html">Nos Plats</a></li>
+                    <li><a href="histoire.html">Notre Histoire</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="burgermenu" id="burger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <div class="socials">
+                <a href="https://www.instagram.com/tuk.tuk.express/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/people/TukTuk-Express/100068199113704/"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <section class="contactwrapper">
+        <div class="container">
+            <div class="contactheader reveal">
+                <span class="subtitle" style="color:#e67e22; font-weight:bold; text-transform:uppercase;">Restons en lien</span>
+                <h1>Contactez-nous</h1>
+            </div>
+
+            <div class="contactgrid">
+                <div class="contactinfo reveal" style="transition-delay: 0.2s;">
+                    <h2>Coordonnées</h2>
+                    <div class="infobloc">
+                        <p><strong>Téléphone</strong></p>
+                        <p>à définir...</p>
+                    </div>
+                    <div class="infobloc">
+                        <p><strong>Email</strong></p>
+                        <p>à définir...</p>
+                    </div>
+
+                    <div class="statusnote">
+                        <p>Le planning de nos emplacements hebdomadaires ainsi que notre nouveau business plan sont actuellement en cours de finalisation par la direction. Nous reviendrons vers vous très prochainement.</p>
+                    </div>
+                </div>
+
+                <div class="contactform reveal" style="transition-delay: 0.4s;">
+                    <h2>Un message ?</h2>
+                    <form onsubmit="envoyer(event)">
+                        <div class="formgroup">
+                            <label>Nom</label>
+                            <input type="text" id="nom" required>
+                        </div>
+                        <div class="formgroup">
+                            <label>Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="formgroup">
+                            <label>Message</label>
+                            <textarea id="msg" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn primary">Envoyer par Email</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>TukTuk Express — Street Food Vietnamien</p>
+            <p style="opacity: 0.6; font-size: 0.8rem; margin-top: 20px;">© 2026 | TukTuk Express</p>
+        </div>
+    </footer>
+
+    <script>
+        burger= document.getElementById("burger");
+        navmenu= document.getElementById("navmenu");
+
+        burger.addEventListener("click", () => {
+            burger.classList.toggle("active");
+            navmenu.classList.toggle("active");
+        });
+
+        document.querySelectorAll(".navlist a").forEach(n => n.addEventListener("click", () => {
+            burger.classList.remove("active");
+            navmenu.classList.remove("active");
+        }));
+
+        window.addEventListener('load', () => {
+            elements= document.querySelectorAll('.reveal');
+            elements.forEach(el => el.classList.add('active'));
+        });
+
+        function envoyer(e) {
+            e.preventDefault();
+            nom= document.getElementById('nom').value;
+            msg= document.getElementById('msg').value;
+            lien= 'mailto:contact@tuktukexpress.fr?subject=Message de ' + nom + '&body=' + msg;
+            window.location.href= lien;
+        }
+    </script>
+</body>
+</html>
