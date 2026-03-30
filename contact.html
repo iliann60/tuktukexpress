@@ -10,78 +10,108 @@
     
     <style>
         *{ margin: 0; padding: 0; box-sizing: border-box; }
-        body{ font-family: 'Poppins', sans-serif; background-color: #fff; color: #333; line-height: 1.6; overflow-x: hidden; }
-        .container{ max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        body{ font-family: 'Poppins', sans-serif; background-color: #fff; color: #333; line-height: 1.7; overflow-x: hidden; }
+        .container{ max-width: 1100px; margin: 0 auto; padding: 0 25px; }
 
-        /* --- HEADER --- */
+        /* HEADER HARMONISÉ */
         .mainheader{ position: fixed; top: 0; left: 0; width: 100%; height: 110px; z-index: 1000; background: #0a1f38; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; }
         .nav{ display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .logo{ height: 90px; width: auto; display: block; transition: transform 0.3s ease; }
+        .logo:hover{ transform: scale(1.05); }
 
-        .navlist{ display: flex; list-style: none; }
-        .navlist li{ margin: 0 20px; }
-        .navlist a{ text-decoration: none; color: white; font-weight: 500; font-size: 1rem; text-transform: uppercase; transition: color 0.3s; position: relative; }
-        .navlist a::after{ content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #e67e22; transition: width 0.3s; }
-        .navlist a:hover::after, .navlist a.active::after{ width: 100%; }
+        .navlist{ display: flex; list-style: none; align-items: center; }
+        .navlist li{ margin: 0 15px; position: relative; height: 110px; display: flex; align-items: center; }
+        .navlist a{ text-decoration: none; color: white; font-weight: 500; font-size: 0.95rem; letter-spacing: 0.5px; transition: color 0.3s; position: relative; text-transform: uppercase; }
+        
+        .navlist > li > a::after{ content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #e67e22; transition: width 0.3s; }
+        .navlist > li > a:hover::after, .navlist > li > a.active::after{ width: 100%; }
 
-        .socials a{ color: white; font-size: 1.3rem; margin-left: 18px; }
+        .dropdown:hover .submenu{ opacity: 1; visibility: visible; transform: translateY(0); }
+        .submenu{ 
+            position: absolute; top: 110px; left: 0; background: #0a1f38; min-width: 220px; 
+            list-style: none; padding: 10px 0; border-top: 2px solid #e67e22;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            opacity: 0; visibility: hidden; transform: translateY(15px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .submenu li{ margin: 0 !important; width: 100%; height: auto !important; display: block !important; }
+        .submenu a{ padding: 12px 20px; display: block; font-size: 0.85rem !important; text-transform: none; }
+        .submenu a::after{ display: none !important; }
+        .submenu a:hover{ background: rgba(230, 126, 34, 0.1); color: #e67e22; }
 
-        /* --- BURGER --- */
+        .socials a{ color: white; font-size: 1.3rem; margin-left: 18px; transition: transform 0.3s, color 0.3s; display: inline-block; }
+        .socials a:hover{ color: #e67e22; transform: translateY(-3px); }
+
         .burgermenu{ display: none; cursor: pointer; padding: 10px; z-index: 1100; }
         .bar{ display: block; width: 28px; height: 3px; margin: 5px auto; transition: all 0.3s ease-in-out; background-color: white; border-radius: 2px; }
 
-        /* --- CONTENT --- */
-        .contactwrapper { padding: 180px 0 80px 0; min-height: 80vh; }
-        .contactheader { margin-bottom: 80px; text-align: center; }
-        .contactgrid { display: flex; gap: 80px; flex-wrap: wrap; }
-        .contactinfo, .contactform { flex: 1; min-width: 300px; }
-        .contactinfo h2, .contactform h2 { font-size: 1.5rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px; }
-        .infobloc { margin-bottom: 25px; }
-        .statusnote { background: #f9f9f9; padding: 25px; border-left: 3px solid #e67e22; margin-top: 40px; }
-        .statusnote p { margin: 0; font-style: italic; color: #666; font-size: 0.9rem; }
+        /* SECTION CONTACT */
+        .contactwrapper{ padding: 180px 0 100px 0; min-height: 80vh; }
+        .contactheader{ margin-bottom: 70px; text-align: center; }
+        .contactheader h1{ font-size: 3rem; color: #0a1f38; text-transform: uppercase; margin-top: 10px; }
+        
+        .contactgrid{ display: flex; gap: 80px; flex-wrap: wrap; }
+        .contactinfo, .contactform{ flex: 1; min-width: 320px; }
+        .contactinfo h2, .contactform h2{ font-size: 1.8rem; margin-bottom: 35px; text-transform: uppercase; letter-spacing: 1px; color: #0a1f38; border-bottom: 3px solid #e67e22; display: inline-block; padding-bottom: 5px; }
+        
+        .infobloc{ margin-bottom: 30px; }
+        .infobloc p strong{ color: #e67e22; text-transform: uppercase; font-size: 0.9rem; display: block; margin-bottom: 5px; }
+        .infobloc p{ font-size: 1.1rem; color: #444; }
+        
+        .statusnote{ background: #f9f9f9; padding: 35px; border-left: 6px solid #e67e22; margin-top: 45px; border-radius: 0 15px 15px 0; box-shadow: 5px 5px 15px rgba(0,0,0,0.03); }
+        .statusnote p{ margin: 0; font-style: italic; color: #666; font-size: 0.95rem; line-height: 1.8; }
 
-        .formgroup { margin-bottom: 25px; }
-        .formgroup label { display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
-        .formgroup input, .formgroup textarea { width: 100%; padding: 15px; border: 1px solid #eee; background: #fcfcfc; font-family: 'Poppins', sans-serif; }
-        .contactform .btn.primary { border: none; cursor: pointer; width: 100%; padding: 15px; background: #0a1f38; color: white; font-weight: bold; text-transform: uppercase; transition: background 0.3s; }
-        .contactform .btn.primary:hover { background: #e67e22; }
+        .formgroup{ margin-bottom: 25px; }
+        .formgroup label{ display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; color: #0a1f38; letter-spacing: 0.5px; }
+        .formgroup input, .formgroup textarea{ width: 100%; padding: 16px; border: 1px solid #eee; background: #fcfcfc; font-family: 'Poppins', sans-serif; border-radius: 8px; transition: all 0.3s; font-size: 0.95rem; }
+        .formgroup input:focus, .formgroup textarea:focus{ outline: none; border-color: #e67e22; background: #fff; box-shadow: 0 0 10px rgba(230, 126, 34, 0.1); }
+        
+        .contactform .btn.primary{ border: none; cursor: pointer; width: 100%; padding: 20px; background: #0a1f38; color: white; font-weight: 700; text-transform: uppercase; transition: all 0.3s; border-radius: 8px; letter-spacing: 1.5px; font-size: 1rem; margin-top: 10px; }
+        .contactform .btn.primary:hover{ background: #e67e22; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(230, 126, 34, 0.3); }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal{ opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .reveal.active{ opacity: 1; transform: translateY(0); }
 
+        /* FOOTER */
         footer{ background: #0a1f38; color: white; padding: 60px 0 30px; text-align: center; }
+        .footercontent{ border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 30px; margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .footersocials a{ color: white; font-size: 1.5rem; margin: 0 10px; transition: color 0.3s; }
+        .footersocials a:hover{ color: #e67e22; }
+        .copyright{ font-size: 0.85rem; opacity: 0.6; }
 
-        /* --- MOBILE --- */
-        @media (max-width: 992px) {
-            .mainheader { height: 80px; }
-            .logo { height: 60px; }
-            .socials { display: none; }
-            .burgermenu { display: block; }
-
-            .navlist {
-                position: fixed;
-                left: -100%;
-                top: 80px;
-                flex-direction: column;
-                background-color: #0a1f38;
-                width: 100%;
-                height: calc(100vh - 80px);
-                text-align: center;
-                transition: 0.4s ease;
-                padding-top: 40px;
+        @media (max-width: 992px){
+            .mainheader{ height: 80px; }
+            .logo{ height: 60px; }
+            .socials{ display: none; }
+            .burgermenu{ display: block; }
+            
+            .navlist{ 
+                position: fixed; left: -100%; top: 80px; flex-direction: column; 
+                background-color: #0a1f38; width: 100%; height: calc(100vh - 80px); 
+                text-align: center; transition: 0.4s ease; padding: 40px 0; 
+                overflow-y: auto; 
             }
+            .navlist.active{ left: 0; }
+            .navlist li{ margin: 0; width: 100%; height: auto; display: block; }
+            .navlist a{ padding: 18px 0; display: block; font-size: 1.1rem; }
 
-            .navlist.active { left: 0; }
-            .navlist li { margin: 25px 0; }
-            .navlist a { font-size: 1.2rem; }
+            .burgermenu.active .bar:nth-child(2){ opacity: 0; }
+            .burgermenu.active .bar:nth-child(1){ transform: translateY(8px) rotate(45deg); }
+            .burgermenu.active .bar:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
 
-            .burgermenu.active .bar:nth-child(2) { opacity: 0; }
-            .burgermenu.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .burgermenu.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+            .submenu{ 
+                position: relative; display: block; 
+                max-height: 0; opacity: 0; overflow: hidden;
+                background: rgba(255, 255, 255, 0.05); border: none; 
+                width: 100%; top: 0; padding: 0;
+                transition: max-height 0.4s ease, opacity 0.3s ease;
+            }
+            .dropdown.active .submenu{ max-height: 400px; opacity: 1; padding: 10px 0; }
 
-            .contactwrapper { padding: 120px 0 40px 0; }
-            .contactgrid { gap: 40px; }
-            .contactheader { margin-bottom: 40px; }
+            .contactwrapper{ padding: 130px 0 60px 0; }
+            .contactgrid{ gap: 60px; }
+            .contactheader h1{ font-size: 2.2rem; }
+            .statusnote{ padding: 25px; }
         }
     </style>
 </head>
@@ -98,6 +128,14 @@
                     <li><a href="index.html">Accueil</a></li>
                     <li><a href="plats.html">Nos Plats</a></li>
                     <li><a href="histoire.html">Notre Histoire</a></li>
+                    <li class="dropdown" id="dropmenu">
+                        <a href="javascript:void(0)">La Stratégie <i class="fa-solid fa-caret-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
+                        <ul class="submenu">
+                            <li><a href="strategie.html#collaboration">Collaboration</a></li>
+                            <li><a href="strategie.html#implantation">Implantation</a></li>
+                            <li><a href="strategie.html#environnement">Environnement</a></li>
+                        </ul>
+                    </li>
                     <li><a href="contact.html" class="active">Contact</a></li>
                 </ul>
             </nav>
@@ -109,8 +147,8 @@
             </div>
 
             <div class="socials">
-                <a href="https://www.instagram.com/tuk.tuk.express/"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/people/TukTuk-Express/100068199113704/"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/tuk.tuk.express/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/people/TukTuk-Express/100068199113704/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
             </div>
         </div>
     </header>
@@ -118,20 +156,20 @@
     <section class="contactwrapper">
         <div class="container">
             <div class="contactheader reveal">
-                <span class="subtitle" style="color:#e67e22; font-weight:bold; text-transform:uppercase;">Restons en lien</span>
+                <span style="color:#e67e22; font-weight:700; text-transform:uppercase; letter-spacing:2px; font-size: 0.9rem;">Restons en lien</span>
                 <h1>Contactez-nous</h1>
             </div>
 
             <div class="contactgrid">
-                <div class="contactinfo reveal" style="transition-delay: 0.2s;">
+                <div class="contactinfo reveal">
                     <h2>Coordonnées</h2>
                     <div class="infobloc">
                         <p><strong>Téléphone</strong></p>
-                        <p>à définir...</p>
+                        <p>À définir...</p>
                     </div>
                     <div class="infobloc">
                         <p><strong>Email</strong></p>
-                        <p>à définir...</p>
+                        <p>À définir...</p>
                     </div>
 
                     <div class="statusnote">
@@ -139,22 +177,22 @@
                     </div>
                 </div>
 
-                <div class="contactform reveal" style="transition-delay: 0.4s;">
+                <div class="contactform reveal">
                     <h2>Un message ?</h2>
-                    <form onsubmit="envoyer(event)">
+                    <form onsubmit="envoyerEmail(event)">
                         <div class="formgroup">
-                            <label>Nom</label>
-                            <input type="text" id="nom" required>
+                            <label>Nom complet</label>
+                            <input type="text" id="nom" placeholder="Votre nom..." required>
                         </div>
                         <div class="formgroup">
                             <label>Email</label>
-                            <input type="email" id="email" required>
+                            <input type="email" id="email" placeholder="votre@email.com" required>
                         </div>
                         <div class="formgroup">
-                            <label>Message</label>
-                            <textarea id="msg" rows="5" required></textarea>
+                            <label>Votre Message</label>
+                            <textarea id="msg" rows="6" placeholder="Comment pouvons-nous vous aider ?" required></textarea>
                         </div>
-                        <button type="submit" class="btn primary">Envoyer par Email</button>
+                        <button type="submit" class="btn primary">Envoyer le message</button>
                     </form>
                 </div>
             </div>
@@ -163,31 +201,39 @@
 
     <footer>
         <div class="container">
-            <p>TukTuk Express — Street Food Vietnamien</p>
-            <p style="opacity: 0.6; font-size: 0.8rem; margin-top: 20px;">© 2026 | TukTuk Express</p>
+            <div class="footercontent">
+                <p>TukTuk Express — Street Food Vietnamien</p>
+                <div class="footersocials">
+                    <a href="https://www.instagram.com/tuk.tuk.express/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/people/TukTuk-Express/100068199113704/" target="_blank"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <p class="copyright">© 2026 | TukTuk Express</p>
         </div>
     </footer>
 
     <script>
         burger= document.getElementById("burger");
         navmenu= document.getElementById("navmenu");
+        dropmenu= document.getElementById("dropmenu");
 
         burger.addEventListener("click", () => {
             burger.classList.toggle("active");
             navmenu.classList.toggle("active");
         });
 
-        document.querySelectorAll(".navlist a").forEach(n => n.addEventListener("click", () => {
-            burger.classList.remove("active");
-            navmenu.classList.remove("active");
-        }));
-
-        window.addEventListener('load', () => {
-            elements= document.querySelectorAll('.reveal');
-            elements.forEach(el => el.classList.add('active'));
+        dropmenu.addEventListener("click", () => {
+            if(window.innerWidth <= 992){
+                dropmenu.classList.toggle("active");
+            }
         });
 
-        function envoyer(e) {
+        window.onload= function() {
+            elements= document.querySelectorAll('.reveal');
+            elements.forEach(el => el.classList.add('active'));
+        }
+
+        function envoyerEmail(e) {
             e.preventDefault();
             nom= document.getElementById('nom').value;
             msg= document.getElementById('msg').value;

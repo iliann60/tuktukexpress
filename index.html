@@ -8,87 +8,121 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        html{ scroll-behavior: smooth; }
         *{ margin: 0; padding: 0; box-sizing: border-box; }
-        body{ font-family: 'Poppins', sans-serif; background-color: #f4f4f4; color: #333; overflow-x: hidden; }
-        .container{ max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        body{ font-family: 'Poppins', sans-serif; background-color: #f4f4f4; color: #333; overflow-x: hidden; line-height: 1.7; }
+        .container{ max-width: 1200px; margin: 0 auto; padding: 0 25px; }
 
-        /* --- HEADER --- */
+        /* HEADER */
         .mainheader{ position: fixed; top: 0; left: 0; width: 100%; height: 110px; z-index: 1000; background: #0a1f38; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; }
         .nav{ display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .logo{ height: 90px; width: auto; display: block; transition: transform 0.3s ease; }
         .logo:hover{ transform: scale(1.05); }
 
-        .navlist{ display: flex; list-style: none; }
-        .navlist li{ margin: 0 20px; }
-        .navlist a{ text-decoration: none; color: white; font-weight: 500; font-size: 1rem; letter-spacing: 0.5px; transition: color 0.3s; position: relative; text-transform: uppercase; }
-        .navlist a::after{ content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #e67e22; transition: width 0.3s; }
-        .navlist a:hover::after, .navlist a.active::after{ width: 100%; }
+        .navlist{ display: flex; list-style: none; align-items: center; }
+        .navlist li{ margin: 0 15px; position: relative; height: 110px; display: flex; align-items: center; }
+        .navlist a{ text-decoration: none; color: white; font-weight: 500; font-size: 0.95rem; letter-spacing: 0.5px; transition: color 0.3s; position: relative; text-transform: uppercase; }
+        
+        .navlist > li > a::after{ content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #e67e22; transition: width 0.3s; }
+        .navlist > li > a:hover::after, .navlist > li > a.active::after{ width: 100%; }
+
+        .dropdown:hover .submenu{ opacity: 1; visibility: visible; transform: translateY(0); }
+        .submenu{ 
+            position: absolute; top: 110px; left: 0; background: #0a1f38; min-width: 200px; 
+            list-style: none; padding: 10px 0; border-top: 2px solid #e67e22;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            opacity: 0; visibility: hidden; transform: translateY(15px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .submenu li{ margin: 0; width: 100%; height: auto !important; display: block !important; }
+        .submenu a{ padding: 12px 20px; display: block; font-size: 0.85rem; text-transform: none; }
+        .submenu a::after{ display: none !important; }
+        .submenu a:hover{ background: rgba(230, 126, 34, 0.1); color: #e67e22; }
 
         .socials a{ color: white; font-size: 1.3rem; margin-left: 18px; transition: transform 0.3s, color 0.3s; display: inline-block; }
         .socials a:hover{ color: #e67e22; transform: translateY(-3px); }
 
-        /* --- BURGER --- */
         .burgermenu{ display: none; cursor: pointer; padding: 10px; z-index: 1100; }
         .bar{ display: block; width: 28px; height: 3px; margin: 5px auto; transition: all 0.3s ease-in-out; background-color: white; border-radius: 2px; }
 
-        /* --- HERO --- */
-        .hero{ position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
+        /* HERO SECTION */
+        .hero{ position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 20px; }
         .heroimg{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
         .herooverlay{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(10, 31, 56, 0.85) 0%, rgba(0, 0, 0, 0.5) 100%); z-index: -1; }
-        .herotext h1{ font-size: 4.5rem; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; line-height: 1; }
-        .subtitle{ display: block; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; color: #e67e22; }
+        .herotext h1{ font-size: 4.5rem; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; line-height: 1.1; }
+        .herotext .subtitle{ display: block; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; color: #e67e22; }
         .highlight{ color: #e67e22; }
         .herotext p{ font-size: 1.2rem; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; opacity: 0.9; }
-        .herobuttons{ display: flex; justify-content: center; gap: 20px; }
+        .herobuttons{ display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .btn{ padding: 16px 40px; border-radius: 4px; text-decoration: none; font-weight: 600; text-transform: uppercase; font-size: 0.9rem; transition: all 0.3s ease; }
         .btn.primary{ background: #e67e22; color: white; border: 2px solid #e67e22; }
         .btn.primary:hover{ background: transparent; color: #e67e22; transform: translateY(-2px); }
         .btn.secondary{ background: transparent; color: white; border: 2px solid white; }
         .btn.secondary:hover{ background: white; color: #0a1f38; transform: translateY(-2px); }
 
-        /* --- FOOTER --- */
+        /* SECTION RESEAUX SOCIAUX */
+        .socialpromo{ padding: 100px 0; text-align: center; background: #fff; }
+        .socialpromo h2{ color: #0a1f38; margin-bottom: 40px; text-transform: uppercase; font-size: 2rem; border-bottom: 2px solid #e67e22; display: inline-block; padding-bottom: 10px; }
+        .socialpromo .subtitle{ color: #e67e22; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; display: block; margin-bottom: 10px; }
+        .socialgrid{ display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 30px; }
+        
+        .socialcard{ 
+            display: flex; align-items: center; text-decoration: none; padding: 30px 45px; 
+            border-radius: 15px; min-width: 320px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); color: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .socialcard i{ font-size: 3.5rem; margin-right: 20px; }
+        .socialinfo{ text-align: left; }
+        .socialinfo h3{ font-size: 1.6rem; margin-bottom: 2px; }
+        .socialinfo p{ font-size: 0.95rem; opacity: 0.9; }
+
+        .insta{ background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .fb{ background: #1877F2; }
+
+        .socialcard:hover{ transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 50px rgba(230, 126, 34, 0.3); }
+
+        /* FOOTER */
         footer{ background: #0a1f38; color: white; padding: 60px 0 30px; text-align: center; }
         .footercontent{ border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 30px; margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .footersocials a{ color: white; font-size: 1.5rem; margin: 0 10px; transition: color 0.3s; }
         .footersocials a:hover{ color: #e67e22; }
         .copyright{ font-size: 0.85rem; opacity: 0.6; }
 
-        /* --- ANIMATIONS --- */
+        /* REVEAL ANIMATION */
         .reveal{ opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.2, 1, 0.3, 1); }
         .reveal.active{ opacity: 1; transform: translateY(0); }
 
-        /* --- MOBILE --- */
         @media (max-width: 992px) {
             .mainheader{ height: 80px; }
             .logo{ height: 60px; }
-            .socials{ display: none; }
             .burgermenu{ display: block; }
+            .socials{ display: none; }
 
             .navlist{
-                position: fixed;
-                left: -100%;
-                top: 80px;
-                flex-direction: column;
-                background-color: #0a1f38;
-                width: 100%;
-                height: calc(100vh - 80px);
-                text-align: center;
-                transition: 0.4s ease;
-                padding-top: 40px;
-                box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+                position: fixed; left: -100%; top: 80px; flex-direction: column;
+                background-color: #0a1f38; width: 100%; height: calc(100vh - 80px);
+                text-align: center; transition: 0.4s ease; padding: 40px 0;
+                overflow-y: auto; 
             }
-
             .navlist.active{ left: 0; }
-            .navlist li{ margin: 25px 0; }
-            .navlist a{ font-size: 1.2rem; }
+            .navlist li{ margin: 0; width: 100%; height: auto; display: block; }
+            .navlist li a{ padding: 18px 0; display: block; font-size: 1.1rem; }
+            
+            /* Sous-menu mobile animé */
+            .submenu{ 
+                position: relative; display: block; 
+                max-height: 0; opacity: 0; overflow: hidden;
+                transform: none; background: rgba(255, 255, 255, 0.05); border: none; 
+                min-width: 100%; top: 0; padding: 0;
+                transition: max-height 0.4s ease, opacity 0.3s ease;
+            }
+            .dropdown.active .submenu{ max-height: 300px; opacity: 1; padding: 10px 0; }
+            .submenu li a{ font-size: 1rem; padding: 15px 0; color: rgba(255, 255, 255, 0.7); border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
 
-            .burgermenu.active .bar:nth-child(2){ opacity: 0; }
-            .burgermenu.active .bar:nth-child(1){ transform: translateY(8px) rotate(45deg); }
-            .burgermenu.active .bar:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
-
-            .herotext h1{ font-size: 2.5rem; }
-            .herobuttons{ flex-direction: column; align-items: center; gap: 15px; }
-            .hero{ height: auto; padding: 150px 0; }
+            .herotext h1{ font-size: 2.8rem; }
+            .herotext p{ font-size: 1.1rem; padding: 0 10px; }
+            .socialgrid{ flex-direction: column; align-items: center; }
+            .socialcard{ min-width: 280px; width: 90%; }
         }
     </style>
 </head>
@@ -104,6 +138,14 @@
                     <li><a href="index.html" class="active">Accueil</a></li>
                     <li><a href="plats.html">Nos Plats</a></li>
                     <li><a href="histoire.html">Notre Histoire</a></li>
+                    <li class="dropdown" id="dropmenu">
+                        <a href="javascript:void(0)">La Stratégie <i class="fa-solid fa-caret-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
+                        <ul class="submenu">
+                            <li><a href="strategie.html#collaboration">Collaboration</a></li>
+                            <li><a href="strategie.html#implantation">Implantation</a></li>
+                            <li><a href="strategie.html#environnement">Environnement</a></li>
+                        </ul>
+                    </li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
@@ -115,8 +157,8 @@
             </div>
 
             <div class="socials">
-                <a href="https://www.instagram.com/tuk.tuk.express/"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/people/TukTuk-Express/100068199113704/"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/tuk.tuk.express/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/people/TukTuk-Express/100068199113704/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
             </div>
         </div>
     </header>
@@ -135,13 +177,36 @@
         </div>
     </section>
 
+    <section class="socialpromo reveal">
+        <div class="container">
+            <span class="subtitle">Suivez l'aventure en direct</span>
+            <h2>Rejoignez la famille TukTuk</h2>
+            <div class="socialgrid">
+                <a href="https://www.instagram.com/tuk.tuk.express/" class="socialcard insta" target="_blank">
+                    <i class="fa-brands fa-instagram"></i>
+                    <div class="socialinfo">
+                        <h3>Instagram</h3>
+                        <p>Nos coulisses & actus</p>
+                    </div>
+                </a>
+                <a href="https://www.facebook.com/people/TukTuk-Express/100068199113704/" class="socialcard fb" target="_blank">
+                    <i class="fa-brands fa-facebook"></i>
+                    <div class="socialinfo">
+                        <h3>Facebook</h3>
+                        <p>Communauté & Partage</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <footer>
         <div class="container">
             <div class="footercontent">
                 <p>TukTuk Express — Street Food Vietnamien</p>
                 <div class="footersocials">
-                    <a href="https://www.instagram.com/tuk.tuk.express/"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/people/TukTuk-Express/100068199113704/"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/tuk.tuk.express/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/people/TukTuk-Express/100068199113704/" target="_blank"><i class="fab fa-facebook"></i></a>
                 </div>
             </div>
             <p class="copyright">© 2026 | TukTuk Express</p>
@@ -151,24 +216,32 @@
     <script>
         burger= document.getElementById("burger");
         navmenu= document.getElementById("navmenu");
+        dropmenu= document.getElementById("dropmenu");
 
         burger.addEventListener("click", () => {
             burger.classList.toggle("active");
             navmenu.classList.toggle("active");
         });
 
+        dropmenu.addEventListener("click", (e) => {
+            if(window.innerWidth <= 992){
+                dropmenu.classList.toggle("active");
+            }
+        });
+
         document.querySelectorAll(".navlist a").forEach(n => n.addEventListener("click", () => {
-            burger.classList.remove("active");
-            navmenu.classList.remove("active");
+            if (!n.parentElement.classList.contains('dropdown')) {
+                burger.classList.remove("active");
+                navmenu.classList.remove("active");
+            }
         }));
 
         function revealOnScroll() {
             reveals= document.querySelectorAll(".reveal");
             windowHeight= window.innerHeight;
-            revealPoint= 100;
             reveals.forEach(el => {
                 revealTop= el.getBoundingClientRect().top;
-                if (revealTop < windowHeight - revealPoint) {
+                if (revealTop < windowHeight - 80) {
                     el.classList.add("active");
                 }
             });
