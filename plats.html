@@ -142,7 +142,7 @@
                     <li><a href="plats.html" class="active">Nos Plats</a></li>
                     <li><a href="histoire.html">Notre Histoire</a></li>
                     <li class="dropdown" id="dropmenu">
-                        <a href="javascript:void(0)">La Stratégie <i class="fa-solid fa-caret-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
+                        <a href="strategie.html" class="stratlink">La Stratégie <i class="fa-solid fa-caret-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
                         <ul class="submenu">
                             <li><a href="strategie.html#collaboration">Collaboration</a></li>
                             <li><a href="strategie.html#implantation">Implantation</a></li>
@@ -260,17 +260,26 @@
         modale= document.getElementById("modale");
         contenumodal= document.getElementById("contenumodal");
 
-        burger.addEventListener("click", () => {
+        burger.addEventListener("click", (e) => {
+            e.stopPropagation();
             burger.classList.toggle("active");
             navmenu.classList.toggle("active");
         });
 
-        dropmenu.addEventListener("click", (e) => {
-            if(window.innerWidth <= 992){
-                e.preventDefault();
-                dropmenu.classList.toggle("active");
-            }
-        });
+        if(dropmenu) {
+            dropmenu.addEventListener("click", (e) => {
+                if(window.innerWidth <= 992) {
+                    cible= e.target;
+                    if(cible.classList.contains('stratlink') || cible.closest('.stratlink')) {
+                        if(!dropmenu.classList.contains('active')) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            dropmenu.classList.add("active");
+                        }
+                    }
+                }
+            });
+        }
 
         histoiresPlats= {
             "Pâtes aux Crevettes": "Ce plat tire ses origines des villages côtiers du Vietnam. Les pêcheurs, rentrant à l'aube, cuisinaient immédiatement les <strong>crevettes fraîches</strong> au wok à très haute température. Nous perpétuons cette tradition en utilisant des <strong>épices sélectionnées</strong> pour sublimer la douceur des crevettes et le <strong>croquant des légumes frais</strong>.",
@@ -306,6 +315,14 @@
                 navmenu.classList.remove("active");
             }
         }));
+
+        document.addEventListener("click", (e) => {
+            if(!navmenu.contains(e.target) && !burger.contains(e.target)) {
+                burger.classList.remove("active");
+                navmenu.classList.remove("active");
+                if(dropmenu) dropmenu.classList.remove("active");
+            }
+        });
     </script>
 
 </body>
