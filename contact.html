@@ -13,7 +13,6 @@
         body{ font-family: 'Poppins', sans-serif; background-color: #fff; color: #333; line-height: 1.7; overflow-x: hidden; }
         .container{ max-width: 1100px; margin: 0 auto; padding: 0 25px; }
 
-        /* HEADER HARMONISÉ */
         .mainheader{ position: fixed; top: 0; left: 0; width: 100%; height: 110px; z-index: 1000; background: #0a1f38; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; }
         .nav{ display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .logo{ height: 90px; width: auto; display: block; transition: transform 0.3s ease; }
@@ -45,7 +44,6 @@
         .burgermenu{ display: none; cursor: pointer; padding: 10px; z-index: 1100; }
         .bar{ display: block; width: 28px; height: 3px; margin: 5px auto; transition: all 0.3s ease-in-out; background-color: white; border-radius: 2px; }
 
-        /* SECTION CONTACT */
         .contactwrapper{ padding: 180px 0 100px 0; min-height: 80vh; }
         .contactheader{ margin-bottom: 70px; text-align: center; }
         .contactheader h1{ font-size: 3rem; color: #0a1f38; text-transform: uppercase; margin-top: 10px; }
@@ -72,7 +70,6 @@
         .reveal{ opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
         .reveal.active{ opacity: 1; transform: translateY(0); }
 
-        /* FOOTER */
         footer{ background: #0a1f38; color: white; padding: 60px 0 30px; text-align: center; }
         .footercontent{ border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 30px; margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .footersocials a{ color: white; font-size: 1.5rem; margin: 0 10px; transition: color 0.3s; }
@@ -129,7 +126,7 @@
                     <li><a href="plats.html">Nos Plats</a></li>
                     <li><a href="histoire.html">Notre Histoire</a></li>
                     <li class="dropdown" id="dropmenu">
-                        <a href="javascript:void(0)">La Stratégie <i class="fa-solid fa-caret-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
+                        <a href="strategie.html" class="stratlink">La Stratégie <i class="fa-solid fa-caret-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
                         <ul class="submenu">
                             <li><a href="strategie.html#collaboration">Collaboration</a></li>
                             <li><a href="strategie.html#implantation">Implantation</a></li>
@@ -217,14 +214,32 @@
         navmenu= document.getElementById("navmenu");
         dropmenu= document.getElementById("dropmenu");
 
-        burger.addEventListener("click", () => {
+        burger.addEventListener("click", (e) => {
+            e.stopPropagation();
             burger.classList.toggle("active");
             navmenu.classList.toggle("active");
         });
 
-        dropmenu.addEventListener("click", () => {
-            if(window.innerWidth <= 992){
-                dropmenu.classList.toggle("active");
+        if(dropmenu) {
+            dropmenu.addEventListener("click", (e) => {
+                if(window.innerWidth <= 992) {
+                    cible= e.target;
+                    if(cible.classList.contains('stratlink') || cible.closest('.stratlink')) {
+                        if(!dropmenu.classList.contains('active')) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            dropmenu.classList.add("active");
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener("click", (e) => {
+            if(!navmenu.contains(e.target) && !burger.contains(e.target)) {
+                burger.classList.remove("active");
+                navmenu.classList.remove("active");
+                if(dropmenu) dropmenu.classList.remove("active");
             }
         });
 
