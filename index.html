@@ -13,7 +13,6 @@
         body{ font-family: 'Poppins', sans-serif; background-color: #f4f4f4; color: #333; overflow-x: hidden; line-height: 1.7; }
         .container{ max-width: 1200px; margin: 0 auto; padding: 0 25px; }
 
-        /* HEADER */
         .mainheader{ position: fixed; top: 0; left: 0; width: 100%; height: 110px; z-index: 1000; background: #0a1f38; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; }
         .nav{ display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .logo{ height: 90px; width: auto; display: block; transition: transform 0.3s ease; }
@@ -45,7 +44,6 @@
         .burgermenu{ display: none; cursor: pointer; padding: 10px; z-index: 1100; }
         .bar{ display: block; width: 28px; height: 3px; margin: 5px auto; transition: all 0.3s ease-in-out; background-color: white; border-radius: 2px; }
 
-        /* HERO SECTION */
         .hero{ position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 20px; }
         .heroimg{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
         .herooverlay{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(10, 31, 56, 0.85) 0%, rgba(0, 0, 0, 0.5) 100%); z-index: -1; }
@@ -60,7 +58,6 @@
         .btn.secondary{ background: transparent; color: white; border: 2px solid white; }
         .btn.secondary:hover{ background: white; color: #0a1f38; transform: translateY(-2px); }
 
-        /* SECTION RESEAUX SOCIAUX */
         .socialpromo{ padding: 100px 0; text-align: center; background: #fff; }
         .socialpromo h2{ color: #0a1f38; margin-bottom: 40px; text-transform: uppercase; font-size: 2rem; border-bottom: 2px solid #e67e22; display: inline-block; padding-bottom: 10px; }
         .socialpromo .subtitle{ color: #e67e22; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; display: block; margin-bottom: 10px; }
@@ -81,14 +78,12 @@
 
         .socialcard:hover{ transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 50px rgba(230, 126, 34, 0.3); }
 
-        /* FOOTER */
         footer{ background: #0a1f38; color: white; padding: 60px 0 30px; text-align: center; }
         .footercontent{ border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 30px; margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .footersocials a{ color: white; font-size: 1.5rem; margin: 0 10px; transition: color 0.3s; }
         .footersocials a:hover{ color: #e67e22; }
         .copyright{ font-size: 0.85rem; opacity: 0.6; }
 
-        /* REVEAL ANIMATION */
         .reveal{ opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.2, 1, 0.3, 1); }
         .reveal.active{ opacity: 1; transform: translateY(0); }
 
@@ -108,7 +103,6 @@
             .navlist li{ margin: 0; width: 100%; height: auto; display: block; }
             .navlist li a{ padding: 18px 0; display: block; font-size: 1.1rem; }
             
-            /* Sous-menu mobile animé */
             .submenu{ 
                 position: relative; display: block; 
                 max-height: 0; opacity: 0; overflow: hidden;
@@ -139,7 +133,7 @@
                     <li><a href="plats.html">Nos Plats</a></li>
                     <li><a href="histoire.html">Notre Histoire</a></li>
                     <li class="dropdown" id="dropmenu">
-                        <a href="javascript:void(0)">La Stratégie <i class="fa-solid fa-caret-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
+                        <a href="strategie.html" class="stratlink">La Stratégie <i class="fa-solid fa-caret-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
                         <ul class="submenu">
                             <li><a href="strategie.html#collaboration">Collaboration</a></li>
                             <li><a href="strategie.html#implantation">Implantation</a></li>
@@ -218,16 +212,26 @@
         navmenu= document.getElementById("navmenu");
         dropmenu= document.getElementById("dropmenu");
 
-        burger.addEventListener("click", () => {
+        burger.addEventListener("click", (e) => {
+            e.stopPropagation();
             burger.classList.toggle("active");
             navmenu.classList.toggle("active");
         });
 
-        dropmenu.addEventListener("click", (e) => {
-            if(window.innerWidth <= 992){
-                dropmenu.classList.toggle("active");
-            }
-        });
+        if(dropmenu) {
+            dropmenu.addEventListener("click", (e) => {
+                if(window.innerWidth <= 992) {
+                    cible= e.target;
+                    if(cible.classList.contains('stratlink') || cible.closest('.stratlink')) {
+                        if(!dropmenu.classList.contains('active')) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            dropmenu.classList.add("active");
+                        }
+                    }
+                }
+            });
+        }
 
         document.querySelectorAll(".navlist a").forEach(n => n.addEventListener("click", () => {
             if (!n.parentElement.classList.contains('dropdown')) {
@@ -235,6 +239,14 @@
                 navmenu.classList.remove("active");
             }
         }));
+
+        document.addEventListener("click", (e) => {
+            if(!navmenu.contains(e.target) && !burger.contains(e.target)) {
+                burger.classList.remove("active");
+                navmenu.classList.remove("active");
+                if(dropmenu) dropmenu.classList.remove("active");
+            }
+        });
 
         function revealOnScroll() {
             reveals= document.querySelectorAll(".reveal");
