@@ -124,7 +124,7 @@
                     <li><a href="plats.html">Nos Plats</a></li>
                     <li><a href="histoire.html" class="active">Notre Histoire</a></li>
                     <li class="dropdown" id="dropmenu">
-                        <a href="javascript:void(0)">La Stratégie <i class="fa-solid fa-caret-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
+                        <a href="strategie.html" class="stratlink">La Stratégie <i class="fa-solid fa-caret-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
                         <ul class="submenu">
                             <li><a href="strategie.html#collaboration">Collaboration</a></li>
                             <li><a href="strategie.html#implantation">Implantation</a></li>
@@ -216,17 +216,37 @@
         navmenu= document.getElementById("navmenu");
         dropmenu= document.getElementById("dropmenu");
 
-        burger.addEventListener("click", () => {
+        burger.addEventListener("click", (e) => {
+            e.stopPropagation();
             burger.classList.toggle("active");
             navmenu.classList.toggle("active");
         });
 
-        dropmenu.addEventListener("click", (e) => {
-            if(window.innerWidth <= 992){
-                e.preventDefault();
-                dropmenu.classList.toggle("active");
-            }
-        });
+        if(dropmenu) {
+            dropmenu.addEventListener("click", (e) => {
+                if(window.innerWidth <= 992) {
+                    cible= e.target;
+                    if(cible.classList.contains('stratlink') || cible.closest('.stratlink')) {
+                        if(!dropmenu.classList.contains('active')) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            dropmenu.classList.add("active");
+                        }
+                    }
+                }
+            });
+        }
+
+        function observerCallback(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }
+
+        const observer= new IntersectionObserver(observerCallback, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
         document.querySelectorAll(".navlist a").forEach(n => n.addEventListener("click", () => {
             if (!n.parentElement.classList.contains('dropdown')) {
@@ -235,18 +255,14 @@
             }
         }));
 
-        function revealOnScroll() {
-            reveals= document.querySelectorAll(".reveal");
-            windowHeight= window.innerHeight;
-            reveals.forEach(el => {
-                revealTop= el.getBoundingClientRect().top;
-                if (revealTop < windowHeight - 100) {
-                    el.classList.add("active");
-                }
-            });
-        }
-        window.addEventListener("scroll", revealOnScroll);
-        window.onload= function() { revealOnScroll(); }
+        document.addEventListener("click", (e) => {
+            if(!navmenu.contains(e.target) && !burger.contains(e.target)) {
+                burger.classList.remove("active");
+                navmenu.classList.remove("active");
+                if(dropmenu) dropmenu.classList.remove("active");
+            }
+        });
     </script>
+
 </body>
 </html>
